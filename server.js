@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const session =  require('cookie-session');
 const passport = require('passport');
 const initializePassport =  require("./passportConfig");
+const auth_msg = require("./passportConfig").msgs
 
 
 // require routes
@@ -51,11 +52,15 @@ app.use('/', index);
 app.use('/smarthire/api', api);
 
 // User Login
-app.post('/login', passport.authenticate("local", {
-    successMessage: "Logged in successfully",
-    failureMessage: "Failed to log in"}), (req, res)=>{
+app.post('/login', passport.authenticate("local", { 
+    successMessage: "Logged in succcessfully", 
+    failureMessage: "Failed to Login"}), (req, res)=>{
+
+        // console.log(auth_msg.message)
         res.status(200).send({message: `Logged in successfully as user, ${req.body.email}`})
-    });
+    }
+);
+
 // User Logout
 app.get('/logout', (req, res, next)=>{
     req.logout();
